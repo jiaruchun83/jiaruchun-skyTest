@@ -1,4 +1,4 @@
-package jiaruchun.cangqiongservice.config;
+package jiaruchun.common.properties;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 @NoArgsConstructor
 @ConfigurationProperties(prefix = "wechat.config")
 @Component
-public class WeChatConfiguration {
+public class WeChatProperties {
     private String appid;//appid
     private String secret;//密钥
     private String grantType;//请求openid发送方式

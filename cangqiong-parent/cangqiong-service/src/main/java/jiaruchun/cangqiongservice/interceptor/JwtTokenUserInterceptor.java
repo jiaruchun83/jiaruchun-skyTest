@@ -3,7 +3,7 @@ package jiaruchun.cangqiongservice.interceptor;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jiaruchun.cangqiongservice.config.JwtConfiguration;
+import jiaruchun.common.properties.JwtProperties;
 import jiaruchun.common.utils.JwtUtil;
 import jiaruchun.common.utils.ThreadLocalUtil;
 import lombok.extern.slf4j.Slf4j;
@@ -22,7 +22,7 @@ import java.util.Map;
 public class JwtTokenUserInterceptor implements HandlerInterceptor {
 
     @Autowired
-    private JwtConfiguration jwtConfiguration;
+    private JwtProperties jwtProperties;
 
 
     @Override
@@ -34,7 +34,7 @@ public class JwtTokenUserInterceptor implements HandlerInterceptor {
         }
 
         //1、从请求头中获取令牌
-        String token = request.getHeader(jwtConfiguration.getUser_token_name());
+        String token = request.getHeader(jwtProperties.getUser_token_name());
 
         // 检查令牌是否为空
         if (token == null || token.isEmpty()) {
@@ -46,8 +46,8 @@ public class JwtTokenUserInterceptor implements HandlerInterceptor {
         //2、校验令牌
         try {
             log.info("jwt校验:{}", token);
-            Map<String,Object> claims = JwtUtil.parseJWT(jwtConfiguration.getSecret_key(), token);
-            Object object = claims.get(jwtConfiguration.getUSER_ID());
+            Map<String,Object> claims = JwtUtil.parseJWT(jwtProperties.getSecret_key(), token);
+            Object object = claims.get(jwtProperties.getUSER_ID());
 
             Long id = null;
             if (object instanceof Integer) {

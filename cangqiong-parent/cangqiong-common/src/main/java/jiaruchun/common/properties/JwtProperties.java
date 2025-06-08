@@ -1,4 +1,4 @@
-package jiaruchun.cangqiongservice.config;
+package jiaruchun.common.properties;
 
 
 import lombok.AllArgsConstructor;
@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 @NoArgsConstructor
 @ConfigurationProperties(prefix = "jwt.config")
 @Component
-public class JwtConfiguration {
+public class JwtProperties {
     //jwt:
     //设置jwt签名加密时使用的秘钥
 //    public static String admin_secret_key = "this_is_a_secure_key_with_at_least_32_bytes_12345678";

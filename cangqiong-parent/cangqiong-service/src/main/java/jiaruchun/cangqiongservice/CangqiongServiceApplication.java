@@ -1,8 +1,8 @@
 package jiaruchun.cangqiongservice;
 
-import jiaruchun.cangqiongservice.config.JwtConfiguration;
-import jiaruchun.cangqiongservice.config.OssConfiguration;
-import jiaruchun.cangqiongservice.config.WeChatConfiguration;
+import jiaruchun.common.properties.JwtProperties;
+import jiaruchun.common.properties.OssProperties;
+import jiaruchun.common.properties.WeChatProperties;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -20,7 +20,7 @@ import org.springframework.web.socket.config.annotation.EnableWebSocket;
 @EnableWebSocket
 @EnableScheduling
 @EnableTransactionManagement
-@EnableConfigurationProperties({OssConfiguration.class, JwtConfiguration.class, WeChatConfiguration.class})
+@EnableConfigurationProperties({OssProperties.class, JwtProperties.class, WeChatProperties.class})
 public class CangqiongServiceApplication {
 
     public static void main(String[] args) {

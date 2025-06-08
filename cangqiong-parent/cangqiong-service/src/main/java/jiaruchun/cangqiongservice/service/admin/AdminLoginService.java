@@ -1,7 +1,7 @@
 package jiaruchun.cangqiongservice.service.admin;
 
 
-import jiaruchun.cangqiongservice.config.JwtConfiguration;
+import jiaruchun.common.properties.JwtProperties;
 import jiaruchun.cangqiongservice.mapper.EmployeeMapper;
 import jiaruchun.common.exce.PasswordErrorException;
 import jiaruchun.common.exce.UserNameErrorException;
@@ -19,7 +19,7 @@ public class AdminLoginService {
     @Autowired
     private EmployeeMapper employeeMapper;
     @Autowired
-    private JwtConfiguration jwtConfiguration;
+    private JwtProperties jwtProperties;
 
     public AdminLoginVO login(AdminLoginVO adminLoginVO)  {
 
@@ -36,9 +36,9 @@ public class AdminLoginService {
                     throw new UserNameErrorException("用户已被锁定");
                 }else{
                     HashMap<String, Object> clams = new HashMap<>();
-                    clams.put(jwtConfiguration.getEMP_ID(),login.getId());
-                    clams.put(jwtConfiguration.getUSERNAME(),login.getUsername());
-                    String s = JwtUtil.creat4eJWT(jwtConfiguration.getSecret_key(), jwtConfiguration.getAdmin_ttl(),clams);
+                    clams.put(jwtProperties.getEMP_ID(),login.getId());
+                    clams.put(jwtProperties.getUSERNAME(),login.getUsername());
+                    String s = JwtUtil.creat4eJWT(jwtProperties.getSecret_key(), jwtProperties.getAdmin_ttl(),clams);
                     return new AdminLoginVO(login.getId(),login.getUsername(),login.getPassword(),s);
                 }
             }

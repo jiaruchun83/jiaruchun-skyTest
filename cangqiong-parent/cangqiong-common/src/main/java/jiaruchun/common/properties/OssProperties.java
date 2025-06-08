@@ -1,4 +1,4 @@
-package jiaruchun.cangqiongservice.config;
+package jiaruchun.common.properties;
 
 
 import lombok.AllArgsConstructor;
@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 @NoArgsConstructor
 @Component
 @ConfigurationProperties(prefix = "aliyun.oss")
-public class OssConfiguration {
+public class OssProperties {
     private String endpoint;
     private String bucketName;
     private String region;

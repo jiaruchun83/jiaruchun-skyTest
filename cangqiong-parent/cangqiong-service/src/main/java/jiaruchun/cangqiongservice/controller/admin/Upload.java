@@ -1,6 +1,6 @@
 package jiaruchun.cangqiongservice.controller.admin;
 
-import jiaruchun.cangqiongservice.config.OssConfiguration;
+import jiaruchun.common.properties.OssProperties;
 import jiaruchun.common.utils.AliyunOSSOUtils;
 import jiaruchun.pojo.Result;
 import lombok.extern.slf4j.Slf4j;
@@ -17,11 +17,11 @@ import java.util.Objects;
 @RequestMapping("/admin/common/upload")
 public class Upload {
     @Autowired
-    private OssConfiguration ossConfiguration;
+    private OssProperties ossProperties;
 
     @PostMapping
     public Result upLoad(MultipartFile file) throws Exception {
-        String upload = AliyunOSSOUtils.upload(file.getBytes(), Objects.requireNonNull(file.getOriginalFilename()), ossConfiguration.getEndpoint(), ossConfiguration.getBucketName(), ossConfiguration.getRegion());
+        String upload = AliyunOSSOUtils.upload(file.getBytes(), Objects.requireNonNull(file.getOriginalFilename()), ossProperties.getEndpoint(), ossProperties.getBucketName(), ossProperties.getRegion());
         return Result.success(upload);
     }
 

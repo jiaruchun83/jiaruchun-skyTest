@@ -1,7 +1,7 @@
 package jiaruchun.cangqiongservice.interceptor;
 
 
-import jiaruchun.cangqiongservice.config.JwtConfiguration;
+import jiaruchun.common.properties.JwtProperties;
 import jiaruchun.common.utils.JwtUtil;
 import jiaruchun.common.utils.ThreadLocalUtil;
 import lombok.extern.slf4j.Slf4j;
@@ -23,7 +23,7 @@ import java.util.Map;
 public class JwtTokenAdminInterceptor implements HandlerInterceptor {
 
     @Autowired
-    private JwtConfiguration jwtConfiguration;
+    private JwtProperties jwtProperties;
 
 
     @Override
@@ -35,7 +35,7 @@ public class JwtTokenAdminInterceptor implements HandlerInterceptor {
         }
 
         //1、从请求头中获取令牌
-        String token = request.getHeader(jwtConfiguration.getAdmin_token_name());
+        String token = request.getHeader(jwtProperties.getAdmin_token_name());
 
         // 检查令牌是否为空
         if (token == null || token.isEmpty()) {
@@ -47,8 +47,8 @@ public class JwtTokenAdminInterceptor implements HandlerInterceptor {
         //2、校验令牌
         try {
             log.info("jwt校验:{}", token);
-            Map<String,Object> claims = JwtUtil.parseJWT(jwtConfiguration.getSecret_key(), token);
-            Object object = claims.get(jwtConfiguration.getEMP_ID());
+            Map<String,Object> claims = JwtUtil.parseJWT(jwtProperties.getSecret_key(), token);
+            Object object = claims.get(jwtProperties.getEMP_ID());
 
             Long id = null;
             if (object instanceof Integer) {
