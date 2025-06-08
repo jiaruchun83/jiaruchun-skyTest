@@ -1,0 +1,13 @@
+jiaruchun\common\utils\ThreadLocalUtil.class
+jiaruchun\common\exce\DishNameException.class
+jiaruchun\common\exce\UserNameErrorException.class
+jiaruchun\common\utils\AliyunOSSOUtils.class
+jiaruchun\common\utils\HttpClientUtil.class
+jiaruchun\common\utils\JwtUtils.class
+jiaruchun\common\exce\UserErrorException.class
+jiaruchun\common\exce\DeleteIdsIsEmpty.class
+jiaruchun\common\exce\BaseException.class
+jiaruchun\common\exce\PasswordErrorException.class
+jiaruchun\common\exce\SetMealNameErrorException.class
+jiaruchun\common\exce\LoginErrorException.class
+jiaruchun\common\utils\JwtUtil.class

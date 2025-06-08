@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile default="true" name="Default" enabled="true" />
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+      </profile>
+      <profile name="Annotation profile for cangqiong-service" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <processorPath useClasspath="false">
+          <entry name="$PROJECT_DIR$/../../../../maven_mulu/apache-maven-3.9.9/maven_bendicangku/org/projectlombok/lombok/1.18.24/lombok-1.18.24.jar" />
+        </processorPath>
+        <module name="cangqiong-service" />
+        <module name="cangqiong-pojo" />
+        <module name="cangqiong-common" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel target="17" />
+  </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="cangqiong-common" options="-parameters" />
+      <module name="cangqiong-parent" options="-parameters" />
+      <module name="cangqiong-pojo" options="-parameters" />
+      <module name="cangqiong-service" options="-parameters" />
+    </option>
+  </component>
+</project>

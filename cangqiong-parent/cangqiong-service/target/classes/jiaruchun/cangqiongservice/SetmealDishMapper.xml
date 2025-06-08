@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="jiaruchun.cangqiongservice.mapper.SetmealDishMapper">
+
+    <insert id="add">
+        INSERT INTO setmeal_dish (setmeal_id,dish_id,name,price,copies)
+        VALUES
+        <foreach collection="setMealDishes" item="setmealDish" separator=",">
+            (#{setmealDish.setmealId},#{setmealDish.dishId},#{setmealDish.name},#{setmealDish.price},#{setmealDish.copies})
+        </foreach>
+    </insert>
+    <delete id="deletes">
+    delete from setmeal_dish where setmeal_id in
+        <foreach collection="ids" item="id" open="(" close=")" separator=",">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

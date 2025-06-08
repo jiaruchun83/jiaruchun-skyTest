@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="jiaruchun.cangqiongservice.mapper.CategoryMapper">
+
+
+    <select id="reAll" resultType="jiaruchun.pojo.admin.entity.Category">
+        /*动态查询返回所有字段，根据name，type，if动态查询category*/
+        select * from category
+        <where>
+            <if test="name != null and name != ''">
+                and name like concat('%', #{name}, '%')
+            </if>
+            <if test="type != null and type != ''">
+                 type = #{type}
+            </if>
+        </where>
+    </select>
+    <select id="ByType" resultType="jiaruchun.pojo.admin.entity.Category">
+        select * from category
+        <where>
+            <if test="type!= null and type!= ''">
+                type = #{type}
+        </if>
+        </where>
+    </select>
+</mapper>

@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="jiaruchun.cangqiongservice.mapper.OrderMapper">
+
+
+    <select id="getAllOrder" resultType="jiaruchun.pojo.Order">
+        select * from orders
+        <where>
+        <if test="status != null and status != ''">
+            and status = #{status}
+        </if>
+        </where>
+    </select>
+    <select id="reAll" resultType="jiaruchun.pojo.Order">
+        select * from orders
+        <where>
+        <if test="beginTime != null and endTime != null">
+            and order_time between #{beginTime} and #{endTime}
+        </if>
+        <if test="number != null and number != ''">
+            and number = #{number}
+        </if>
+        <if test="phone != null and phone != ''">
+            and phone = #{phone}
+        </if>
+        <if test="status!= null and status!= ''">
+            and status = #{status}
+        </if>
+        </where>
+    </select>
+    <select id="getDetailList" resultType="jiaruchun.pojo.admin.dto.ExcellREportDetailDTO">
+        <![CDATA[
+        WITH RECURSIVE date_sequence AS (
+            SELECT #{begin} AS date
+        UNION ALL
+        SELECT date + INTERVAL 1 DAY
+        FROM date_sequence
+        WHERE date + INTERVAL 1 DAY <= #{end}
+            )
+        SELECT
+            ds.date,
+            COALESCE(sub.turnover, 0) AS turnover,
+            COALESCE(sub.valid_order_count, 0) AS valid_order_count,
+            -- 计算订单完成率，保留两位小数并转为百分比格式
+            CONCAT(ROUND(COALESCE(sub.valid_order_count / sub.total_order_count, 0) * 100, 2), '%') AS order_completion_rate,
+            COALESCE(sub.avg_order_amount, 0) AS avg_order_amount,
+            COALESCE(user.new_user_count, 0) AS new_user_count
+        FROM
+            date_sequence ds
+                LEFT JOIN (
+                SELECT
+                    DATE(o.order_time) AS order_date,
+            SUM(IF(o.status = 5, o.amount, 0)) AS turnover,
+            COUNT(CASE WHEN o.status = 5 THEN 1 END) AS valid_order_count,
+            COUNT(o.id) AS total_order_count,
+            -- 计算平均客单价，保留两位小数
+            ROUND(SUM(IF(o.status = 5, o.amount, 0)) / NULLIF(COUNT(CASE WHEN o.status = 5 THEN 1 END), 0), 2) AS avg_order_amount
+            FROM
+                orders o
+        WHERE
+            o.order_time BETWEEN #{begin} AND #{end}
+        GROUP BY
+            DATE(o.order_time)
+            ) sub ON ds.date = sub.order_date
+            LEFT JOIN (
+            SELECT
+            DATE(u.create_time) AS create_date,
+            COUNT(u.id) AS new_user_count
+            FROM
+            user u
+            WHERE
+            u.create_time BETWEEN #{begin} AND #{end}
+            GROUP BY
+            DATE(u.create_time)
+            ) user ON ds.date = user.create_date
+        ORDER BY
+            ds.date
+        ]]>
+    </select>
+
+</mapper>

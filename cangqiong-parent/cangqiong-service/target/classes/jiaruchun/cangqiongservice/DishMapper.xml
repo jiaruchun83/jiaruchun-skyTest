@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="jiaruchun.cangqiongservice.mapper.DishMapper">
+
+    <update id="upDish">
+        update dish set
+        <if test="name != null and name != '' ">
+            name = #{name},
+        </if>
+        <if test="price!= null and price!= '' ">
+            price = #{price},
+        </if>
+        <if test="image!= null and image!= '' ">
+            image = #{image},
+        </if>
+        <if test="description!= null and description!= '' ">
+            description = #{description},
+        </if>
+        <if test="categoryId!= null and categoryId!= '' ">
+            category_id = #{categoryId},
+        </if>
+        <if test="status!= null and status!= '' ">
+            status = #{status},
+        </if>
+        update_time = now(),
+        update_user = #{updateUser}
+        where id = #{id}
+    </update>
+    <delete id="delete">
+        delete from dish
+        where id in
+        <foreach collection="ids" item="id" open="(" close=")" separator=",">
+            #{id}
+        </foreach>
+    </delete>
+    <select id="reAll" resultType="jiaruchun.pojo.admin.entity.Dish">
+            select * from dish
+            <where>
+                <if test="name!= null and name!= '' ">
+                    and name like concat('%',#{name},'%')
+                </if>
+                <if test="categoryId!= null and categoryId!= '' ">
+                    and category_id = #{categoryId}
+                </if>
+                <if test="status!= null and status!= '' ">
+                    and status = #{status}
+                </if>
+            </where>
+    </select>
+
+</mapper>

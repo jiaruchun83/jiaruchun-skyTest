@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="jiaruchun.cangqiongservice.mapper.UserMapper">
+    <select id="getNewUserList" resultType="java.lang.String">
+        <![CDATA[
+        WITH RECURSIVE date_series AS (
+            SELECT DATE(#{begin}) AS day
+        UNION ALL
+        SELECT DATE_ADD(day, INTERVAL 1 DAY)
+        FROM date_series
+        -- 将 < 替换为 =
+        WHERE day = DATE(#{end})
+            ),
+            daily_user AS (
+        SELECT DATE(create_time) AS day, COUNT(*) AS new_users
+        FROM user
+        WHERE create_time BETWEEN '2025-06-01 00:00:00' AND '2025-06-06 23:59:59'
+        GROUP BY day
+            )
+        SELECT GROUP_CONCAT(IFNULL(d.new_users, 0) ORDER BY ds.day SEPARATOR ',') AS daily_new_users
+        FROM date_series ds
+                 LEFT JOIN daily_user d ON ds.day = d.day
+        ]]>
+    </select>
+</mapper>
