@@ -13,6 +13,7 @@ import org.springframework.data.redis.serializer.GenericJackson2JsonRedisSeriali
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 
 
+/*redis的配置类，自定义序列化器等*/
 @Configuration
 @Slf4j
 public class RedisConfiguration {
